@@ -1,0 +1,12 @@
+[submodule "dependencies/GLEngine_src"]
+	path = dependencies/GLEngine_src
+	url = git@github.com:pablo0722/GLEngine_src.git
+[submodule "dependencies/WindowSystem_src"]
+	path = dependencies/WindowSystem_src
+	url = git@github.com:pablo0722/WindowSystem_src.git
+[submodule "include/GLEngine"]
+	path = include/GLEngine
+	url = git@github.com:pablo0722/GLEngine.git
+[submodule "include/WindowSystem"]
+	path = include/WindowSystem
+	url = git@github.com:pablo0722/WindowSystem.git
