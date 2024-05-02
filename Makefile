@@ -18,17 +18,22 @@ winsystem_src = dependencies/WindowSystem_src
 winsystem_bin = dependencies/WindowSystem_src/bin
 windowsystem_libname = WindowSystem
 
+all:
+	make clean
+	make Engine_createExample
+	./Engine_createExample
+
 test: ${out}/lib${engine_libname}.a
 	g++ -o test egl_example.cpp -L lib -l${engine_libname} ${inc} -lX11 -lGLESv2 -lEGL
 
 Engine_createExample: ${out}/lib${engine_libname}.a
-	g++ -o test Engine_createExample.cpp -L lib -l${engine_libname} ${inc} -lX11 -lGLESv2 -lEGL
+	g++ -o Engine_createExample Engine_createExample.cpp -L lib -l${engine_libname} ${inc} -lX11 -lGLESv2 -lEGL
 
 WindowSystem_createExample: ${out}/lib${windowsystem_libname}.a
-	g++ -o test WindowSystem_createExample.cpp -L lib -l${windowsystem_libname} ${inc} -lX11
+	g++ -o WindowSystem_createExample WindowSystem_createExample.cpp -L lib -l${windowsystem_libname} ${inc} -lX11
 
-clean: clean_winsystem clean_engine
-	rm -rf ./*.o ./main_linux ./test
+clean: clean_winsystem clean_engine clean_khr clean_egl
+	rm -rf ./*.o ./main_linux ./test ./Engine_createExample ./WindowSystem_createExample
 
 # MAKE ENGINE LIB
 ${out}/lib${engine_libname}.a: ${engine_bin}/lib${engine_libname}_isolated.a ${out}/lib${windowsystem_libname}.a ${out}/lib${khr_libname}.a
@@ -69,7 +74,7 @@ ${egl_bin}/Egl.o: ${egl_src}/Egl.cpp
 	mkdir -p ${egl_bin}
 	g++ -c ${egl_src}/Egl.cpp -o ${egl_bin}/Egl.o ${inc}
 
-clean_khr:
+clean_egl:
 	rm -rf ${egl_bin} ${out}/lib${egl_libname}.a
 
 # MAKE WINDOW_SYSTEM LIB

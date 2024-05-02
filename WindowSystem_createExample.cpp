@@ -8,7 +8,7 @@
 int main() {
     WindowSystem ws;
 
-    ws.create("EGL Example", 1500, 100, 1024, 768);
+    ws.create("EGL Example", 0, 0, 1024, 768);
 
     while(WindowSystem::Event::Delete != ws.getEvents())
     {
