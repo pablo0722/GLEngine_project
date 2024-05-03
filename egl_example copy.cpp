@@ -3,7 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "WindowSystem/WindowSystem.hpp"
+#include "WindowSystem/EglWindowSystem.hpp"
 
 // typedef struct
 // {

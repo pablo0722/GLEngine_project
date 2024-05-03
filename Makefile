@@ -16,7 +16,7 @@ egl_libname = Egl
 
 winsystem_src = dependencies/WindowSystem_src
 winsystem_bin = dependencies/WindowSystem_src/bin
-windowsystem_libname = WindowSystem
+windowsystem_libname = EglWindowSystem
 
 all_Engine_createExample:
 	make clean

@@ -7,6 +7,9 @@
 [submodule "include/GLEngine"]
 	path = include/GLEngine
 	url = git@github.com:pablo0722/GLEngine.git
+[submodule "include/EglWindowSystem"]
+	path = include/EglWindowSystem
+	url = git@github.com:pablo0722/EglWindowSystem.git
 [submodule "include/WindowSystem"]
 	path = include/WindowSystem
 	url = git@github.com:pablo0722/WindowSystem.git
