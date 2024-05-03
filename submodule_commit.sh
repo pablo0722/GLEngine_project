@@ -1,10 +1,12 @@
 #!/bin/bash
-function git_submodule_commit() {
-    local msg="$2"
-    local branch="$3"
-    echo "pwd: $(pwd)"
+function git_submodule_commit {
+    local dir=$1
+    local msg=$2
+    local branch=$3
     local last_pwd=$(pwd)
-    dir=$1
+    echo "1- message: $msg"
+    echo "1- branch: $branch"
+    echo "pwd: $(pwd)"
     dir=${dir//\'}
     cd "$(pwd)/$dir"
     declare -a arr=($(git submodule  foreach --recursive))
@@ -13,14 +15,14 @@ function git_submodule_commit() {
         for i in "${arr[@]}"
         do
             if [[ $i != *"Entering"* ]]; then
-                git_submodule_commit "$i"
+                git_submodule_commit "$i" "$msg" "$branch"
             fi
         done
     fi
 
     git add --all .
-    echo "message: $msg"
-    echo "branch: $branch"
+    echo "2- message: $msg"
+    echo "2- branch: $branch"
     git commit -m "$msg"
     git push origin "$branch"
 
@@ -34,4 +36,4 @@ fi
 
 msg=$1
 branch=$2
-git_submodule_commit "." $msg $branch
+git_submodule_commit "." "$msg" "$branch"
