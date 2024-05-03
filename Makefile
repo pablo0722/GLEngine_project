@@ -98,12 +98,3 @@ ${winsystem_bin}/WindowSystemLinux.o: ${winsystem_src}/WindowSystemLinux.cpp
 
 clean_winsystem:
 	rm -rf ${winsystem_bin} ${out}/lib${windowsystem_libname}.a
-
-# SUBMODULES
-
-commit:
-	arr=$(git submodule  foreach --recursive)
-	for i in "${arr[@]}"
-	do
-		echo "array x is $i"
-	done
