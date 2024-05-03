@@ -1,5 +1,5 @@
 engine_name = GLEngine
-inc = -I include
+inc = -I include -I dependencies
 out = lib
 
 engine_src = dependencies/${engine_name}_src
@@ -18,10 +18,15 @@ winsystem_src = dependencies/WindowSystem_src
 winsystem_bin = dependencies/WindowSystem_src/bin
 windowsystem_libname = WindowSystem
 
-all:
+all_Engine_createExample:
 	make clean
 	make Engine_createExample
 	./Engine_createExample
+
+all_WindowSystem_createExample:
+	make clean
+	make WindowSystem_createExample
+	./WindowSystem_createExample
 
 test: ${out}/lib${engine_libname}.a
 	g++ -o test egl_example.cpp -L lib -l${engine_libname} ${inc} -lX11 -lGLESv2 -lEGL
@@ -66,26 +71,39 @@ clean_khr:
 	rm -rf ${khr_bin} ${out}/lib${khr_libname}.a
 
 # MAKE EGL LIB
-${out}/lib${egl_libname}.a: ${egl_bin}/Egl.o
+${out}/lib${egl_libname}.a: ${egl_bin}/Egl.o ${egl_bin}/EglWindowSystem_Linux.o
 	mkdir -p ${out}
-	ar -rcs ${out}/lib${egl_libname}.a ${egl_bin}/Egl.o
+	ar -rcs ${out}/lib${egl_libname}.a ${egl_bin}/Egl.o ${egl_bin}/EglWindowSystem_Linux.o
 
 ${egl_bin}/Egl.o: ${egl_src}/Egl.cpp
 	mkdir -p ${egl_bin}
 	g++ -c ${egl_src}/Egl.cpp -o ${egl_bin}/Egl.o ${inc}
+
+${egl_bin}/EglWindowSystem_Linux.o: ${egl_src}/EglWindowSystem_Linux.cpp
+	mkdir -p ${egl_bin}
+	g++ -c ${egl_src}/EglWindowSystem_Linux.cpp -o ${egl_bin}/EglWindowSystem_Linux.o ${inc}
 
 clean_egl:
 	rm -rf ${egl_bin} ${out}/lib${egl_libname}.a
 
 # MAKE WINDOW_SYSTEM LIB
 
-${out}/lib${windowsystem_libname}.a: ${winsystem_bin}/WindowSystem_X11.o
+${out}/lib${windowsystem_libname}.a: ${winsystem_bin}/WindowSystemLinux.o
 	mkdir -p ${out}
-	ar -rcs ${out}/lib${windowsystem_libname}.a ${winsystem_bin}/WindowSystem_X11.o
+	ar -rcs ${out}/lib${windowsystem_libname}.a ${winsystem_bin}/WindowSystemLinux.o
 
-${winsystem_bin}/WindowSystem_X11.o: ${winsystem_src}/WindowSystem_X11.cpp
+${winsystem_bin}/WindowSystemLinux.o: ${winsystem_src}/WindowSystemLinux.cpp
 	mkdir -p ${winsystem_bin}
-	g++ -c ${winsystem_src}/WindowSystem_X11.cpp -o ${winsystem_bin}/WindowSystem_X11.o ${inc}
+	g++ -c ${winsystem_src}/WindowSystemLinux.cpp -o ${winsystem_bin}/WindowSystemLinux.o ${inc}
 
 clean_winsystem:
 	rm -rf ${winsystem_bin} ${out}/lib${windowsystem_libname}.a
+
+# SUBMODULES
+
+commit:
+	arr=$(git submodule  foreach --recursive)
+	for i in "${arr[@]}"
+	do
+		echo "array x is $i"
+	done

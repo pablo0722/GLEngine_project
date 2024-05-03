@@ -17,7 +17,7 @@ int main_WinSystem_CreateExample() {
 
     ws.create("EGL Example", 1500, 100, 1024, 768);
 
-    while(WinSystem::Event::Delete != ws.getEvents())
+    while(WinSystem::Event::Delete != ws.getEvent())
     {
         // If no sleep, 100% of one core will consumed. Overall system will continuing working normally using other cores.
         usleep(10000);

@@ -12,11 +12,11 @@ void update(void *ctx, float deltatime) {
 int main() {
     GLEngine engine;
 
-    engine.create("EGL Example", 1500, 100, 1024, 768);
+    engine.create("EGL Example", 1500, 100, 1024, 768, EGL_FLAG_FRAMEBUFFER_RGB);
 
     engine.registerUpdateFunc(update);
 
-    engine.loop();
+    engine.loop(NULL);
 
     return 0;
 }
