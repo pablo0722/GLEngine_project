@@ -4,9 +4,6 @@ function git_submodule_commit {
     local msg=$2
     local branch=$3
     local last_pwd=$(pwd)
-    echo "1- message: $msg"
-    echo "1- branch: $branch"
-    echo "pwd: $(pwd)"
     dir=${dir//\'}
     cd "$(pwd)/$dir"
     declare -a arr=($(git submodule  foreach --recursive))
@@ -21,10 +18,8 @@ function git_submodule_commit {
     fi
 
     git add --all .
-    echo "2- message: $msg"
-    echo "2- branch: $branch"
     git commit -m "$msg"
-    git push origin "$branch"
+    git push -f origin "$branch"
 
     cd $last_pwd
 }
